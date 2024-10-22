@@ -11,6 +11,7 @@ from lightgbm import LGBMClassifier
 from imblearn.over_sampling import SMOTE
 import matplotlib.pyplot as plt
 import seaborn as sns
+import time
 
 
 def criar_amostra(df, frac=0.1):
@@ -65,6 +66,14 @@ def avaliar_modelo(modelo, X_test, y_test):
         "AUC-ROC": roc_auc_score(y_test, y_proba)
     }
     
+    # Adicionando classificação por classe
+    report = classification_report(y_test, y_pred, output_dict=True)
+    for classe in report.keys():
+        if classe not in ['accuracy', 'macro avg', 'weighted avg']:
+            metricas[f"Precisão_Classe_{classe}"] = report[classe]['precision']
+            metricas[f"Recall_Classe_{classe}"] = report[classe]['recall']
+            metricas[f"F1-Score_Classe_{classe}"] = report[classe]['f1-score']
+    
     for nome, valor in metricas.items():
         print(f"{nome}: {valor:.4f}")
     
@@ -110,12 +119,18 @@ def treinar_e_avaliar(X_train, X_test, y_train, y_test, estrategia):
     resultados = []
     for nome, modelo in modelos.items():
         print(f"\nOtimizando e treinando {nome}...")
+        
+        inicio = time.time()
         random_search = RandomizedSearchCV(modelo, param_distributions=param_grids[nome], 
                                             n_iter=10, cv=3, random_state=42, n_jobs=-1)
         random_search.fit(X_train, y_train)
+        fim = time.time()
+        
+        tempo_treinamento = fim - inicio
         
         melhor_modelo = random_search.best_estimator_
         print(f"Melhores parâmetros para {nome}: {random_search.best_params_}")
+        print(f"Tempo de treinamento: {tempo_treinamento:.2f} segundos")
         
         print(f"Avaliação do {nome} (Estratégia de preparação: {estrategia}):")
         metricas = avaliar_modelo(melhor_modelo, X_test, y_test)
@@ -123,48 +138,50 @@ def treinar_e_avaliar(X_train, X_test, y_train, y_test, estrategia):
         resultado = {
             'modelo': nome,
             'estrategia': estrategia,
+            'tempo_treinamento': tempo_treinamento,
             **random_search.best_params_,
             **metricas
         }
         
         resultados.append(resultado)
     
-    pd.DataFrame(resultados).to_parquet('resultados_modelos.parquet')
     return resultados, {nome: random_search.best_estimator_ for nome, _ in modelos.items()}
 
 
-def selecionar_melhor_modelo(resultados_modelos, dados_preparados):
-    melhor_modelo = None
+def selecionar_melhor_modelo(todos_resultados, dados_preparados):
     melhor_f1 = 0
+    melhor_modelo = None
     melhor_estrategia = None
     melhor_nome = None
 
-    for estrategia, resultados in resultados_modelos.items():
-        for resultado in resultados:
-            nome = resultado['modelo']
-            f1 = resultado['F1-Score']
-            if f1 > melhor_f1:
-                melhor_f1 = f1
-                melhor_estrategia = estrategia
-                melhor_nome = nome
-
-    X_train = dados_preparados[melhor_estrategia][0]
-    y_train = dados_preparados[melhor_estrategia][2]
-    
-    if melhor_nome == 'Random Forest':
-        melhor_modelo = RandomForestClassifier(random_state=42)
-    elif melhor_nome == 'XGBoost':
-        melhor_modelo = XGBClassifier(random_state=42)
-    elif melhor_nome == 'LightGBM':
-        melhor_modelo = LGBMClassifier(random_state=42)
-    
-    melhores_params = next(resultado for resultado in resultados_modelos[melhor_estrategia] if resultado['modelo'] == melhor_nome)
-    params = {k: v for k, v in melhores_params.items() if k not in ['modelo', 'estrategia', 'Acurácia', 'Precisão', 'Recall', 'F1-Score', 'AUC-ROC']}
-    
-    melhor_modelo.set_params(**params)
-    melhor_modelo.fit(X_train, y_train)
+    for resultado in todos_resultados:
+        estrategia = resultado['estrategia']
+        nome = resultado['modelo']
+        f1 = resultado['F1-Score']
+        
+        if f1 > melhor_f1:
+            melhor_f1 = f1
+            melhor_estrategia = estrategia
+            melhor_nome = nome
+            # Recuperar o modelo treinado dos dados_preparados
+            X_train, _, y_train, _ = dados_preparados[estrategia]
+            melhor_modelo = treinar_modelo(nome, X_train, y_train)
 
     return melhor_estrategia, melhor_nome, melhor_modelo, melhor_f1
+
+
+def treinar_modelo(nome_modelo, X_train, y_train):
+    if nome_modelo == 'Random Forest':
+        modelo = RandomForestClassifier(random_state=42)
+    elif nome_modelo == 'XGBoost':
+        modelo = XGBClassifier(random_state=42)
+    elif nome_modelo == 'LightGBM':
+        modelo = LGBMClassifier(random_state=42)
+    else:
+        raise ValueError(f"Modelo desconhecido: {nome_modelo}")
+    
+    modelo.fit(X_train, y_train)
+    return modelo
 
 
 def treinar_e_prever_modelo_final(df, test, melhor_modelo, melhor_estrategia, tratar_nulos):
