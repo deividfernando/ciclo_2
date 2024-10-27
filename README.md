@@ -1,89 +1,141 @@
 # Desafio de Fim de Ciclo 2 - AlphaEdtech
 
-Este projeto faz parte do desafio final do ciclo 2 do curso de Python na AlphaEdtech, onde o objetivo é realizar análises de Machine Learning (ML) utilizando modelos baseados em ensembles. O dataset fornecido é anônimo, e a missão é aplicar técnicas avançadas de treinamento e otimização de modelos para avaliar o desempenho de algoritmos de aprendizado supervisionado.
+## 📋 Descrição do Projeto
+Este projeto faz parte do desafio final do ciclo 2 do curso de Python na AlphaEdtech. O objetivo é realizar análises de Machine Learning (ML) utilizando modelos baseados em ensembles. O dataset fornecido é anônimo, e a missão é aplicar técnicas avançadas de treinamento e otimização de modelos para avaliar o desempenho de algoritmos de aprendizado supervisionado.
 
-## 📚 Sobre o Projeto
+## 🎯 Objetivos Principais
+1. Avaliar o impacto do número de árvores e profundidade no desempenho dos modelos
+2. Comparar o tempo de treinamento entre **Random Forest** e **Gradient Boosting**
+3. Analisar as variáveis mais importantes para o **Random Forest** e sua interpretação
+4. Otimizar hiperparâmetros dos modelos usando técnicas como **Grid Search** ou **Random Search**
+5. Desenvolver modelos de classificação robustos usando técnicas de ensemble learning
+6. Comparar diferentes estratégias de tratamento de dados nulos
+7. Avaliar o impacto da redução de dimensionalidade (PCA) no desempenho dos modelos
 
-O desafio consiste em treinar e comparar dois modelos de ML baseados em árvores de decisão: **Random Forest** e **Gradient Boosting** (utilizando XGBoost ou LightGBM). O foco é entender como a combinação de várias árvores de decisão (ensembles) pode melhorar a performance dos modelos e reduzir o overfitting.
+## 🔍 Modelos e Análises
+### Modelos Implementados
+- Random Forest
+- XGBoost
+- LightGBM
 
-## 🎯 Objetivos
+### Estratégias de Pré-processamento
+- Média
+- Mediana
+- Moda
+- Constante
+- Análise personalizada por coluna
 
-1. Avaliar o impacto do número de árvores e profundidade no desempenho dos modelos.
-2. Comparar o tempo de treinamento entre **Random Forest** e **Gradient Boosting**.
-3. Analisar as variáveis mais importantes para o **Random Forest** e sua interpretação.
-4. Otimizar hiperparâmetros dos modelos usando técnicas como **Grid Search** ou **Random Search**.
+### Métricas de Desempenho
+- Acurácia
+- Precisão, Recall e F1-Score
+- Matriz de Confusão
+- Curva ROC e AUC
 
-## 🔍 Análises e Métricas
-
-Durante o treinamento e avaliação dos modelos, monitoramos as seguintes métricas de desempenho:
-
-- **Acurácia**
-- **Precisão**, **Recall** e **F1-Score**
-- **Matriz de Confusão**
-- **Curva ROC e AUC**
-
-### Interpretação dos Modelos
-
-Analisamos as variáveis mais importantes que impactam cada modelo, verificamos o overfitting através de **cross-validation** e discutimos como as escolhas influenciam o problema abordado.
-
-### Ajuste de Hiperparâmetros
-
-Para otimizar o desempenho, aplicamos técnicas de ajuste de hiperparâmetros, como:
-
-- **Grid Search**
-- **Random Search**
-
-## 🔧 Pré-processamento de Dados
-
-A qualidade do pré-processamento foi essencial para o sucesso do projeto. A etapa incluiu:
-
-- Correta **divisão dos dados**
-- **Tratamento de outliers**
-- **Imputação** de dados faltantes
-- Análise de como a **normalização** afeta o desempenho dos modelos
+### Técnicas de Otimização
+- Redução de dimensionalidade via PCA
+- Balanceamento de classes com SMOTE
+- RandomizedSearchCV para otimização de hiperparâmetros
 
 ## 💡 Justificativa de Escolha dos Modelos
+Cada modelo foi escolhido com base nas características específicas do problema:
+- **Random Forest**: Escolhido por sua robustez contra overfitting e boa performance em dados de alta dimensionalidade
+- **Gradient Boosting (XGBoost/LightGBM)**: Selecionado por sua alta performance em competições de ML e capacidade de lidar com dados complexos
 
-Cada modelo foi escolhido com base nas características do problema abordado e sua capacidade de lidar com dados complexos, como o **Random Forest**, que é robusto contra overfitting, e o **Gradient Boosting**, conhecido por sua alta performance em competições de ML.
+## 📊 Resultados Principais
+- **Melhor Modelo**: LightGBM com estratégia de análise de colunas
+  - Acurácia: 86.51%
+  - Precisão Classe 0: 57.47%
+  - Precisão Classe 1: 88.28%
+  - Pontuação média: 77.42%
 
-## 📊 Resultados
+- **Desempenho no Conjunto de Teste Final**:
+  - Acurácia: 80.23%
+  - Precisão: 81.21%
+  - Recall: 97.02%
+  - F1-Score: 88.42%
 
-Os resultados dos modelos foram avaliados utilizando métricas como **AUC-ROC**, **F1-Score**, entre outras, e as variáveis mais importantes foram identificadas e interpretadas para justificar as decisões tomadas durante o processo.
+## 🔧 Pré-processamento de Dados
+A qualidade do pré-processamento foi essencial para o sucesso do projeto:
+- Correta divisão dos dados
+- Tratamento de outliers
+- Imputação de dados faltantes
+- Análise do impacto da normalização no desempenho
+- Técnicas de redução de dimensionalidade
 
-## 🛠 Ferramentas Utilizadas
+## 🛠️ Ambiente de Desenvolvimento
+- **Linguagem:** Python 3.x
+- **Principais Bibliotecas:** 
+  - scikit-learn
+  - xgboost
+  - lightgbm
+  - pandas
+  - numpy
+  - matplotlib
+  - seaborn
+  - imblearn
+- **IDEs e Ferramentas:**
+  - Visual Studio Code
+  - GitHub
+  - Google Colab (experimentação e treinamento em nuvem)
 
-- **Linguagem:** Python
-- **Bibliotecas:** Scikit-learn, XGBoost, LightGBM, Matplotlib, Seaborn
-- **Ambiente de Desenvolvimento:** Visual Studio Code, GitHub
-- **Outras Ferramentas:** Google Colab para experimentação e treinamento em nuvem
+## 📦 Estrutura do Projeto
+```
+├── data/
+│   ├── train.parquet
+│   └── test.parquet
+├── utils/
+│   └── functions.py
+├── notebooks/
+│   ├── treinamento.ipynb
+│   ├── analise_modelos.ipynb
+│   └── analise_resultados.ipynb
+├── README.md
+└── requirements.txt
+```
 
 ## 🚀 Instruções de Instalação e Execução
 
-Siga os passos abaixo para configurar e executar o projeto localmente:
-
-
-**1. Clone o repositório:**
+1. Clone o repositório:
 ```bash
-  git clone https://github.com/deividfernando/ciclo_2.git
-
+git clone https://github.com/deividfernando/ciclo_2.git
+cd ciclo_2
 ```
 
-**2. Navegue até o diretório do projeto:**
+2. Configure o ambiente virtual:
 ```bash
-   cd ciclo_2
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-**3. Crie um ambiente virtual (opcional, mas recomendado):**
+3. Instale as dependências:
 ```bash
-   - No Windows:
-     python -m venv venv
-     venv\Scripts\activate
-   - No macOS/Linux:
-     python3 -m venv venv
-     source venv/bin/activate
-```
-**4. Instale as dependências:**
-```bash
-   pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
+4. Execute os notebooks na ordem:
+   - `treinamento.ipynb`
+   - `analise_modelos.ipynb`
+   - `analise_resultados.ipynb`
+
+## 📈 Features e Análises Avançadas
+- Análise estatística completa de distribuições
+- Múltiplas estratégias de tratamento de dados nulos
+- Otimização avançada de hiperparâmetros
+- Análise de importância de features
+- Visualizações detalhadas de performance
+
+## 🤝 Contribuições
+Contribuições são bem-vindas! Para contribuir:
+1. Faça um Fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/NovaFuncionalidade`)
+3. Commit suas mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
+4. Push para a branch (`git push origin feature/NovaFuncionalidade`)
+5. Abra um Pull Request
+
+## 📝 Licença
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
