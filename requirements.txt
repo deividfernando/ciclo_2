@@ -1,7 +1,12 @@
 pandas==1.3.5
-scikit-learn==0.24.2
-xgboost==1.5.0
+numpy==1.26.4
+scikit-learn==1.5.1
+xgboost==2.1.1
 lightgbm==3.3.2
 imbalanced-learn==0.8.1
-matplotlib==3.5.1
-seaborn==0.11.2
+matplotlib==3.9.0
+seaborn==0.13.2
+shap
+streamlit
+plotly
+streamlit-option-menu
