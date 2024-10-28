@@ -122,6 +122,19 @@ pip install -r requirements.txt
    - `analise_modelos.ipynb`
    - `analise_resultados.ipynb`
 
+5. Visualize os resultados no dashboard interativo:
+```bash
+streamlit run app.py
+```
+O dashboard será aberto automaticamente no seu navegador padrão (geralmente em http://localhost:8501) e oferece:
+   - 🏠 Visão geral do projeto e navegação intuitiva
+   - 📊 Análise exploratória dos dados (distribuições, correlações e dados faltantes)
+   - ⚙️ Interface para configuração e treinamento dos modelos
+   - 📈 Visualização das métricas de performance e resultados
+   - ℹ️ Informações sobre objetivos e ferramentas utilizadas
+
+**Nota**: Certifique-se de que todos os notebooks foram executados antes de iniciar o dashboard, pois ele depende dos arquivos de resultados gerados durante o treinamento e análise dos modelos.
+
 ## 📈 Features e Análises Avançadas
 - Análise estatística completa de distribuições
 - Múltiplas estratégias de tratamento de dados nulos
