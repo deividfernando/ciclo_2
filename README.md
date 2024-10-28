@@ -104,7 +104,7 @@ A qualidade do pré-processamento foi essencial para o sucesso do projeto:
 │   └── 📄 functions.py
 📄 analise_modelos.ipynb
 📄 analise_resultados.ipynb 
-📄 app.ipynb
+📄 app.py
 📄 LICENSE 
 📄 predicoes_finais.csv 
 📄 README.md
