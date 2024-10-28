@@ -80,17 +80,38 @@ A qualidade do pré-processamento foi essencial para o sucesso do projeto:
 
 ## 📦 Estrutura do Projeto
 ```
-├── data/
-│   ├── train.parquet
-│   └── test.parquet
-├── utils/
-│   └── functions.py
-├── notebooks/
-│   ├── treinamento.ipynb
-│   ├── analise_modelos.ipynb
-│   └── analise_resultados.ipynb
-├── README.md
-└── requirements.txt
+📂 data/
+│   ├── 📄 train.parquet
+│   └── 📄 test.parquet
+📂 src/
+│   ├── 📂 components/
+│   │   ├── 📄 charts.py
+│   │   └── 📄 metrics.py
+│   ├── 📂 config/
+│   │   ├── 📄 constants.py
+│   │   ├── 📄 plotly_config.py
+│   │   └── 📄 styles.py
+│   ├── 📂 pages/
+│   │   ├── 📄 dashboard.py
+│   │   ├── 📄 data_analysis.py
+│   │   ├── 📄 models.py
+│   │   ├── 📄 result.py
+│   │   └── 📄 team.py
+│   ├── 📂 utils/
+│       ├── 📄 data_loader.py
+│       └── 📄 plotting.py
+📂 utils/
+│   └── 📄 functions.py
+📄 analise_modelos.ipynb
+📄 analise_resultados.ipynb 
+📄 app.ipynb
+📄 LICENSE 
+📄 predicoes_finais.csv 
+📄 README.md
+📄 requirements.txt
+📄 resultado_modelos.parquet
+📄 treinamento.ipynb
+
 ```
 
 ## 🚀 Instruções de Instalação e Execução
