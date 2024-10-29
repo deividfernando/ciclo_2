@@ -139,7 +139,7 @@ class ModelPerformanceCharts:
             fig.add_trace(go.Scatterpolar(
                 r=[row[metric] for metric in metrics],
                 theta=metrics,
-                name=row['modelo'],
+                name=f"{row['modelo']} {index}",
                 line_color=self.colors[index % len(self.colors)]
             ))
 

@@ -44,25 +44,45 @@ class MetricCard:
 
     def render(self):
         """Renderiza o card da métrica no Streamlit"""
-        st.markdown(
-            f"""
-            <div style="
-                background: {self.style['background']};
-                border-radius: {self.style['border_radius']};
-                padding: {self.style['padding']};
-                box-shadow: {self.style['shadow']};
-                border-left: 4px solid {self.color};
-            ">
-                <p style="color: #666; margin-bottom: 4px; font-size: 14px;">
-                    {self.title}
-                </p>
-                <h3 style="color: {self.color}; margin: 0; font-size: 24px;">{self.format_value()}</h3>
-                {f'<p style="color: {"green" if float(self.delta.strip("%")) > 0 else "red"}; margin: 4px 0;">{self.delta}</p>' if self.delta else ''}
-                {f'<p style="color: #666; margin: 4px 0; font-size: 12px;">{self.description}</p>' if self.description else ''}
-            </div>
-            """, 
-            unsafe_allow_html=True
-        )
+        if self.delta:
+            st.markdown(
+                f"""
+                <div style="
+                    background: {self.style['background']};
+                    border-radius: {self.style['border_radius']};
+                    padding: {self.style['padding']};
+                    box-shadow: {self.style['shadow']};
+                    border-left: 4px solid {self.color};
+                ">
+                    <p style="color: #666; margin-bottom: 4px; font-size: 14px;">
+                        {self.title}
+                    </p>
+                    <h3 style="color: {self.color}; margin: 0; font-size: 24px;">{self.format_value()}</h3>
+                    {f'<p style="color: {"green" if float(self.delta.strip("%")) > 0 else "red"}; margin: 4px 0; margin-top: -19px">{self.delta}</p>'}
+                    {f'<p style="color: #666; margin: 4px 0; font-size: 12px; margin-top: -7px">{self.description}</p>' if self.description else ''}
+                </div>
+                """, 
+                unsafe_allow_html=True
+            )
+        else:
+            st.markdown(
+                f"""
+                <div style="
+                    background: {self.style['background']};
+                    border-radius: {self.style['border_radius']};
+                    padding: {self.style['padding']};
+                    box-shadow: {self.style['shadow']};
+                    border-left: 4px solid {self.color};
+                ">
+                    <p style="color: #666; margin-bottom: 4px; font-size: 14px;">
+                        {self.title}
+                    </p>
+                    <h3 style="color: {self.color}; margin: 0; font-size: 24px;">{self.format_value()}</h3>
+                    {f'<p style="color: #666; margin: 4px 0; font-size: 12px;">{self.description}</p>' if self.description else ''}
+                </div>
+                """, 
+                unsafe_allow_html=True
+            )
 
 class MetricGrid:
     """Classe para criar grids de métricas"""
