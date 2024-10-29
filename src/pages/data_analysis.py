@@ -212,7 +212,7 @@ def show_analysis(df: pd.DataFrame):
     
     if viz_type == 'Distribuições':
         if selected_features:
-            for feature in selected_features:
+            for i, feature in enumerate(selected_features):
                 plot_data = prepare_data_for_plotting(df, feature)
                 fig = create_interactive_chart(
                     data=plot_data,
@@ -220,7 +220,7 @@ def show_analysis(df: pd.DataFrame):
                     chart_type='histogram',
                     title=f'Distribuição de {feature}'
                 )
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, use_container_width=True, key = f"histogram_{feature}_{i}")
             
             if show_statistics:
                 st.markdown("#### 📊 Estatísticas Descritivas")
@@ -229,7 +229,7 @@ def show_analysis(df: pd.DataFrame):
                 
                 # Teste de normalidade
                 st.markdown("#### 🔍 Teste de Normalidade (Shapiro-Wilk)")
-                for feature in selected_features:
+                for i, feature in enumerate(selected_features):
                     try:
                         # Remover valores nulos e infinitos
                         data_clean = df[feature].dropna()
@@ -253,7 +253,7 @@ def show_analysis(df: pd.DataFrame):
         if len(selected_features) > 1:
             st.markdown("#### 🔄 Matriz de Correlação")
             corr_fig = data_charts.correlation_matrix()
-            st.plotly_chart(corr_fig, use_container_width=True)
+            st.plotly_chart(corr_fig, use_container_width=True, key = "correlation_matrix")
             
             if show_statistics:
                 st.markdown("#### 📊 Coeficientes de Correlação")
@@ -263,7 +263,7 @@ def show_analysis(df: pd.DataFrame):
     elif viz_type == 'Box Plots':
         if selected_features:
             st.markdown("#### 📦 Box Plots")
-            for feature in selected_features:
+            for i, feature in enumerate(selected_features):
                 plot_data = prepare_data_for_plotting(df, feature)
                 if 'y' in df.columns:
                     plot_data = prepare_data_for_plotting(plot_data, 'y')
@@ -274,7 +274,7 @@ def show_analysis(df: pd.DataFrame):
                     chart_type='box',
                     title=f'Box Plot - {feature}'
                 )
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, use_container_width=True, key = f"boxplot_{feature}_{i}")
                 
                 if show_statistics and show_outliers:
                     # Identificação de outliers
@@ -304,7 +304,7 @@ def show_analysis(df: pd.DataFrame):
                         color='y' if 'y' in df.columns else None,
                         title=f'Scatter Plot - {selected_features[i]} vs {selected_features[j]}'
                     )
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, use_container_width=True, key = f"scatter_{selected_features[i]}_{selected_features[j]}")
 
     # Análise de Features
     st.markdown("### 🎯 Análise de Features")

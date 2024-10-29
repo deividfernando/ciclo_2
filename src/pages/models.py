@@ -190,7 +190,7 @@ def show_models():
                 "Random Forest": [
                     "Comece com `n_estimators` mais alto",
                     "Ajuste `max_depth` para controlar overfitting",
-                    "Balance `min_samples_split` e `min_samples_leaf`"
+                    "Balanceie `min_samples_split` e `min_samples_leaf`"
                 ],
                 "XGBoost": [
                     "Use `learning_rate` menor com mais `n_estimators`",

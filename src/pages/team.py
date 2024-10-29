@@ -89,7 +89,6 @@ def show_team():
         with col:
             st.markdown(f"""
             <div style="
-                background: white;
                 padding: 20px;
                 border-radius: 10px;
                 box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -110,14 +109,13 @@ def show_team():
         "Deivid Fernando": "Arquitetura do projeto e desenvolvimento do dashboard",
         "Diego Alvarenga": "Análise exploratória e feature engineering",
         "Fernando Moreno": "Implementação do Random Forest e otimização de hiperparâmetros",
-        "Renam R. C. Pinto": "Análise estatística e validação de modelos",
+        "Renan Pinto": "Análise estatística e validação de modelos",
         "Yasmim Ferreira": "Visualização de dados e documentação"
     }
     
     for name, contribution in contributions.items():
         st.markdown(f"""
         <div style="
-            background: white;
             padding: 15px;
             border-radius: 5px;
             margin: 10px 0;
@@ -133,7 +131,6 @@ def show_team():
     
     st.markdown("""
     <div style="
-        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
         padding: 20px;
         border-radius: 10px;
         text-align: center;
