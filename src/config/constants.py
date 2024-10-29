@@ -38,7 +38,7 @@ TEAM_MEMBERS = [
         "linkedin_url": "https://www.linkedin.com/in/moreno-fernando/"
     },
     {
-        "name": "Renam R. C. Pinto",
+        "name": "Renan Pinto",
         "github_username": "RenanRCPinto", 
         "role": "Data Scientist",
         "github_url": "https://github.com/RenanRCPinto", 
