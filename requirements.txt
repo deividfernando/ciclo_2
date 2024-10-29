@@ -9,4 +9,5 @@ seaborn==0.13.2
 shap
 streamlit
 plotly
-streamlit-option-menu
+streamlit_option_menu
+streamlit_lottie
