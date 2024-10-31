@@ -230,8 +230,8 @@ def show_results(results: pd.DataFrame):
                 mime="text/markdown"
             )
 
-    # Conclusões e Recomendações
-    st.markdown("### 💡 Conclusões e Recomendações")
+    # Conclusões
+    st.markdown("### 💡 Conclusões")
     
     with st.expander("Ver análise completa"):
         # Melhor modelo geral
@@ -250,12 +250,6 @@ def show_results(results: pd.DataFrame):
         - Trade-off entre performance e tempo de treinamento
         - Comportamento por classe
         
-        #### 🎯 Recomendações
-        
-        1. Otimização adicional de hiperparâmetros
-        2. Análise de features importantes
-        3. Investigação de casos de erro
-        4. Possíveis melhorias no pré-processamento
         """)
 
     # Timestamp

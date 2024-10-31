@@ -49,7 +49,6 @@ def show_dashboard(df: pd.DataFrame, results: pd.DataFrame):
             title="Melhor Acurácia",
             value=filtered_results['Acurácia'].max(),
             delta=f"+{(filtered_results['Acurácia'].max() - filtered_results['Acurácia'].mean()):.2%}",
-            suffix="%",
             description=f"Modelo: {filtered_results.loc[filtered_results['Acurácia'].idxmax(), 'modelo']}"
         ).render()
     
@@ -150,21 +149,7 @@ def show_dashboard(df: pd.DataFrame, results: pd.DataFrame):
         - Balanceamento entre precisão e recall
         - Impacto da estratégia de pré-processamento
         """)
-        
-        # Recomendações
-        st.markdown("""
-        **Recomendações**:
-        1. Otimização de hiperparâmetros para modelos específicos
-        2. Investigação de features importantes
-        3. Análise de casos de erro comum
-        """)
 
-    # Download de relatório
-    st.markdown("### 📥 Download do Relatório")
-    
-    if st.button("Gerar Relatório PDF"):
-        # TODO: Implementar geração de PDF
-        st.info("Funcionalidade em desenvolvimento")
 
     # Timestamp
     create_timestamp_info()
