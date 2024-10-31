@@ -12,42 +12,36 @@ TEAM_MEMBERS = [
     {
         "name": "Cleverson Guandalin",
         "github_username": "CleverGnd", 
-        "role": "Data Engineer",
         "github_url": "https://github.com/CleverGnd", 
         "linkedin_url": "https://www.linkedin.com/in/cleversonguandalin/"
     },
     {
         "name": "Deivid Fernando",
         "github_username": "deividfernando",
-        "role": "Data Engineer",
         "github_url": "https://github.com/deividfernando",
         "linkedin_url": "https://www.linkedin.com/in/deividfsilva/"
     },
     {
         "name": "Diego Alvarenga",
         "github_username": "diegoalvarengarodrigues",
-        "role": "Data Scientist",
         "github_url": "https://github.com/diegoalvarengarodrigues",
         "linkedin_url": "https://www.linkedin.com/in/diego-alvarenga-rodrigues-02b9b31a4/"
     },
     {
         "name": "Fernando Moreno",
         "github_username": "F-moreno",
-        "role": "Data Engineer",
         "github_url": "https://github.com/F-moreno",
         "linkedin_url": "https://www.linkedin.com/in/moreno-fernando/"
     },
     {
         "name": "Renan Pinto",
         "github_username": "RenanRCPinto", 
-        "role": "Data Scientist",
         "github_url": "https://github.com/RenanRCPinto", 
         "linkedin_url": "https://www.linkedin.com/in/renan-pinto-96b06b156/"
     },
     {
         "name": "Yasmim Ferreira",
         "github_username": "ysmmfe",  
-        "role": "Data Analyst",
         "github_url": "https://github.com/ysmmfe",  
         "linkedin_url": "https://www.linkedin.com/in/ysmmfe/" 
     }
