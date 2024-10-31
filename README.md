@@ -1,5 +1,3 @@
-# Desafio de Fim de Ciclo 2 - AlphaEdtech
-
 <p align = "center">
   <img alt = "GitHub language count" src="https://img.shields.io/github/languages/count/deividfernando/ciclo_2?color=%2304D361">
 
@@ -22,6 +20,8 @@
   <img alt = "Stargazers" src="https://img.shields.io/github/stars/deividfernando/ciclo_2?style=social">
 
 </p>
+
+# Desafio de Fim de Ciclo 2 - AlphaEdtech
 
 <p align="center">
  <a href="#-descrição-do-projeto">Descrição do projeto</a> •
