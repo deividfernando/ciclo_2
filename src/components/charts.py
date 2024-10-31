@@ -93,7 +93,7 @@ class ModelPerformanceCharts:
             fig.add_trace(go.Bar(
                 name=metric,
                 x=self.results['modelo'],
-                y=self.results[metric],
+                y=self.results[metric] / 10,
                 text=self.results[metric].round(3),
                 textposition='auto',
                 marker_color=self.colors[i % len(self.colors)]
@@ -115,7 +115,7 @@ class ModelPerformanceCharts:
 
         fig.add_trace(go.Bar(
             x=self.results['modelo'],
-            y=self.results['tempo_treinamento'],
+            y=self.results['tempo_treinamento'] / 10,
             text=self.results['tempo_treinamento'].round(2),
             textposition='auto',
             marker_color=self.colors[0]
