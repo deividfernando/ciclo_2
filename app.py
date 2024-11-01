@@ -36,8 +36,8 @@ def create_sidebar():
     with st.sidebar:
         return option_menu(
             menu_title="Menu",
-            options=["Introdução", "Dashboard", "Modelos", "Análise dos Dados", "Melhor Modelo", "Resultados", "Nosso Time"],
-            icons=["house", "speedometer2", "gear", "bar-chart", "trophy", "graph-up", "people"],
+            options=["Introdução", "Modelos", "Análise dos Dados", "Melhor Modelo", "Resultados", "Nosso Time"],
+            icons=["house", "gear", "bar-chart", "trophy", "graph-up", "people"],
             menu_icon="cast",
             default_index=0,
             styles={
@@ -66,8 +66,6 @@ def main():
     try:
         if selected_page == "Introdução":
             show_introduction()
-        elif selected_page == "Dashboard":
-            show_dashboard(df, results)
         elif selected_page == "Melhor Modelo":
             show_best_model()
         elif selected_page == "Análise dos Dados":
