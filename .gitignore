@@ -6,3 +6,4 @@ venv/
 !*.parquet.encrypted
 encrypt_data.py
 __pycache__/
+.streamlit/secrets.toml
