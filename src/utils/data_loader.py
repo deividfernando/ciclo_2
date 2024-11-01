@@ -4,6 +4,8 @@ import requests
 from src.config.constants import LOTTIE_URLS, FILE_PATHS, ERROR_MESSAGES
 from datetime import datetime
 import os
+from cryptography.fernet import Fernet
+import io
 
 @st.cache_data
 def load_lottie_url(url: str) -> dict:
@@ -32,6 +34,30 @@ def load_data() -> pd.DataFrame:
     Returns:
         pd.DataFrame: DataFrame com os dados ou None se houver erro
     """
+    try:
+        key = st.secrets["CRYPTO_KEY"]
+        if not key:
+            with open('.env', 'rb') as key_file:
+                key = key_file.read()
+        
+        f = Fernet(key)
+        
+        with open('data/train.parquet.encrypted', 'rb') as file:
+            encrypted_data = file.read()
+            decrypted_data = f.decrypt(encrypted_data)
+            df = pd.read_parquet(io.BytesIO(decrypted_data))
+        
+        with open('data/test.parquet.encrypted', 'rb') as file:
+            encrypted_data = file.read()
+            decrypted_data = f.decrypt(encrypted_data)
+            test = pd.read_parquet(io.BytesIO(decrypted_data))
+            
+    except Exception as e:
+        print("Erro ao carregar os dados:", e)
+        exit()
+
+    print("Informações do Dataset:")
+    print(df.info())
     try:
         # Verificar se o arquivo existe
         if not os.path.exists(FILE_PATHS['train_data']):

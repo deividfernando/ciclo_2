@@ -1,3 +1,8 @@
 data/test.csv
 data/train.csv
 venv/
+*.parquet
+.env
+!*.parquet.encrypted
+encrypt_data.py
+__pycache__/
