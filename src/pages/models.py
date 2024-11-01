@@ -29,17 +29,90 @@ def show_models():
     with tabs[0]:
         st.markdown("### 📋 Modelos Implementados")
         
-        for name, info in MODELS_INFO.items():
+        models_overview = {
+            "Random Forest": {
+                "what_is": """
+                    Funciona como uma "votação" entre vários modelos, onde cada árvore analisa os dados 
+                    de forma independente, e a decisão final é baseada no consenso.
+                """,
+                "implementation": """
+                    Em nossa implementação, configuramos com 300 árvores, profundidade máxima de 30 
+                    e validação cruzada com 5 folds.
+                """,
+                "advantages": [
+                    "Alta resistência ao overfitting",
+                    "Excelente interpretabilidade",
+                    "Robusto com diferentes tipos de dados",
+                    "Não precisa de normalização dos dados"
+                ],
+                "disadvantages": [
+                    "Pode ser mais lento em datasets muito grandes",
+                    "Maior uso de memória RAM",
+                    "Menos eficiente com relações muito complexas"
+                ],
+                "color": MODELS_INFO["Random Forest"]["color"]
+            },
+            "XGBoost": {
+                "what_is": """
+                    Trabalha com aprendizado sequencial e gradual, onde cada etapa corrige os erros 
+                    da anterior, sendo muito eficiente computacionalmente.
+                """,
+                "implementation": """
+                    Utilizamos learning rate de 0,1 e 300 estimadores, com early stopping para 
+                    prevenir overfitting. Otimizado para alta precisão.
+                """,
+                "advantages": [
+                    "Alta precisão na maioria dos problemas",
+                    "Eficiente com grandes volumes de dados",
+                    "Excelente em detectar padrões complexos",
+                    "Implementação otimizada e rápida"
+                ],
+                "disadvantages": [
+                    "Requer mais ajuste fino de parâmetros",
+                    "Maior complexidade de configuração",
+                    "Pode ser mais suscetível a overfitting"
+                ],
+                "color": MODELS_INFO["XGBoost"]["color"]
+            },
+            "LightGBM": {
+                "what_is": """
+                    Modelo com crescimento lateral das árvores, otimizado para performance e 
+                    eficiência computacional.
+                """,
+                "implementation": """
+                    Configurado com 200 estimadores e 50 leaves por árvore, utilizando 5 folds 
+                    na validação cruzada. Foco em velocidade e eficiência.
+                """,
+                "advantages": [
+                    "Excelente velocidade de treinamento",
+                    "Uso eficiente de memória",
+                    "Ótimo para datasets muito grandes",
+                    "Bom equilíbrio entre performance e velocidade"
+                ],
+                "disadvantages": [
+                    "Menos eficiente com relações muito complexas",
+                    "Maior uso de memória RAM",
+                    "Menos eficiente com relações muito complexas"
+                ],
+                "color": MODELS_INFO["LightGBM"]["color"]
+            }
+        }
+        
+        for name, info in models_overview.items():
             with st.expander(name, expanded=True):
                 st.markdown(f"""
                 <div style="
                     border-left: 4px solid {info['color']};
                     padding-left: 20px;
                 ">
-                    <p>{info['desc']}</p>
+                    <p>{info['what_is']}</p>
                     <h4>Principais Características:</h4>
                     <ul>
-                        {''.join(f'<li>{param}</li>' for param in info['params'])}
+                        {''.join(f'<li>{param}</li>' for param in info['advantages'])}
+                    </ul>
+                    <h4>Desvantagens:</h4>
+                    <ul>
+                        {''.join(f'<li>{param}</li>' for param in info['disadvantages'])}
                     </ul>
                 </div>
                 """, unsafe_allow_html=True)

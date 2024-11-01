@@ -3,6 +3,7 @@ from streamlit_option_menu import option_menu
 import plotly.io as pio
 
 # Importações das páginas
+from src.pages.introduction import show_introduction
 from src.pages.dashboard import show_dashboard
 from src.pages.data_analysis import show_analysis
 from src.pages.best_model import show_best_model
@@ -35,8 +36,8 @@ def create_sidebar():
     with st.sidebar:
         return option_menu(
             menu_title="Menu",
-            options=["Dashboard", "Análise dos Dados", "Melhor Modelo", "Modelos", "Resultados", "Nosso Time"],
-            icons=["speedometer2", "bar-chart", "trophy", "gear", "graph-up", "people"],
+            options=["Introdução", "Dashboard", "Análise dos Dados", "Melhor Modelo", "Modelos", "Resultados", "Nosso Time"],
+            icons=["house", "speedometer2", "bar-chart", "Trophy", "gear", "graph-up", "people"],
             menu_icon="cast",
             default_index=0,
             styles={
@@ -63,7 +64,9 @@ def main():
     
     # Renderizar página selecionada
     try:
-        if selected_page == "Dashboard":
+        if selected_page == "Introdução":
+            show_introduction()
+        elif selected_page == "Dashboard":
             show_dashboard(df, results)
         elif selected_page == "Melhor Modelo":
             show_best_model()

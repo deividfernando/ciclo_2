@@ -365,33 +365,6 @@ def show_analysis(df: pd.DataFrame):
                 
                 st.dataframe(stats_df.set_index('Estatística').style.format("{:.4f}"))
 
-    # Análise Bivariada
-    if len(selected_features) >= 2:
-        st.markdown("### 🔄 Análise Bivariada")
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            feature_x = st.selectbox("Feature X", options=selected_features, key="feature_x")
-        
-        with col2:
-            feature_y = st.selectbox("Feature Y", options=selected_features, key="feature_y")
-        
-        if feature_x != feature_y:
-            scatter_fig = create_interactive_chart(
-                data=df,
-                x=feature_x,
-                y=feature_y,
-                chart_type='scatter',
-                color='y' if 'y' in df.columns else None,
-                title=f'Relação entre {feature_x} e {feature_y}'
-            )
-            st.plotly_chart(scatter_fig, use_container_width=True)
-            
-            if show_statistics:
-                correlation = df[feature_x].corr(df[feature_y])
-                st.write(f"Correlação de Pearson: {correlation:.4f}")
-
     # Download dos dados analisados
     st.markdown("### 📥 Download da Análise")
     
