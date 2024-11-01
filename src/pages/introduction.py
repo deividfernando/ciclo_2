@@ -160,10 +160,9 @@ def show_introduction():
         st.markdown("#### Seções Principais")
         st.markdown("""
         - **Introdução**: Contexto do projeto
-        - **Dashboard**: Visão geral dos resultados
+        - **Modelos**: Configurações e comparações
         - **Análise dos Dados**: Exploração detalhada do dataset
         - **Melhor Modelo**: Resultado obtido
-        - **Modelos**: Configurações e comparações
         - **Resultados**: Métricas e avaliações
         - **Nosso Time**: Participantes do projeto
         """)
