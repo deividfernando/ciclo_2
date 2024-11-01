@@ -31,7 +31,7 @@ def show_introduction():
     with col2:
         MetricCard(
             title="Features Analisadas",
-            value="100+",
+            value="60",
             description="Características numéricas",
             color="#2ca02c"
         ).render()
