@@ -3,79 +3,96 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from PIL import Image
+from src.utils.data_loader import load_results
+
 
 def show_best_model():
     """
     Renderiza a página do melhor modelo.
     """
-    # Cabeçalho
-    st.title("🏆 Melhor Modelo - LightGBM")
-    
-    # Métricas principais
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.metric(
-            label="Acurácia",
-            value="86.51%",
-            delta="Melhor performance"
-        )
-    
-    with col2:
-        st.metric(
-            label="F1-Score",
-            value="88%",
-            delta="Classe majoritária"
-        )
-    
-    with col3:
-        st.metric(
-            label="Precisão Média",
-            value="74%",
-            delta="Macro avg"
-        )
-    
-    with col4:
-        st.metric(
-            label="AUC-ROC",
-            value="79%",
-            delta="Boa separação"
+    try:
+        # Carregar resultados
+        results = load_results()
+        if results is None:
+            raise ValueError("Não foi possível carregar os resultados dos modelos")
+
+        # Identificar o melhor modelo (baseado no F1-Score)
+        best_model_data = results.loc[results["F1-Score"].idxmax()]
+
+        # Cabeçalho
+        st.title(f"🏆 Melhor Modelo - {best_model_data['modelo']}")
+
+        # Métricas principais
+        col1, col2, col3, col4 = st.columns(4)
+
+        with col1:
+            st.metric(
+                label="Acurácia",
+                value=f"{best_model_data['Acurácia']:.2%}",
+                delta="Melhor performance",
+            )
+
+        with col2:
+            st.metric(
+                label="F1-Score",
+                value=f"{best_model_data['F1-Score']:.2%}",
+                delta="Classe majoritária",
+            )
+
+        with col3:
+            st.metric(
+                label="Precisão Média",
+                value=f"{best_model_data['Precisão']:.2%}",
+                delta="Macro avg",
+            )
+
+        with col4:
+            st.metric(
+                label="AUC-ROC",
+                value=f"{best_model_data['AUC-ROC']:.2%}",
+                delta="Boa separação",
+            )
+
+        # Detalhes do modelo
+        st.markdown(
+            f"""
+        ### 📊 Detalhes do Modelo
+        
+        **Modelo**: {best_model_data['modelo']}
+        
+        **Pontuação média**: {best_model_data['F1-Score']:.4f}
+        
+        **Métricas por classe**:
+        - Classe 0 (Minoritária):
+            - Precisão: {best_model_data['Precisão_Classe_0']:.2%}
+            - Recall: {best_model_data['Recall_Classe_0']:.2%}
+        - Classe 1 (Majoritária):
+            - Precisão: {best_model_data['Precisão_Classe_1']:.2%}
+            - Recall: {best_model_data['Recall_Classe_1']:.2%}
+        """
         )
 
-    # Detalhes do modelo
-    st.markdown("""
-    ### 📊 Detalhes do Modelo
-    
-    **Modelo**: LightGBM com estratégia de análise de colunas
-    
-    **Pontuação média**: 0.7742
-    
-    **Métricas por classe**:
-    - Classe 0 (Minoritária):
-        - Precisão: 57.47%
-        - Recall: 21%
-    - Classe 1 (Majoritária):
-        - Precisão: 88.28%
-        - Recall: 97%
-    """)
+    except Exception as e:
+        st.error(f"Erro ao carregar dados do melhor modelo: {str(e)}")
 
     # Matriz de Confusão e Curva ROC
     col1, col2 = st.columns(2)
-    
+
     with col1:
         st.markdown("### Matrix de Confusão")
         # Carregar e exibir a imagem da curva ROC
-        confusion_matrix = Image.open('assets/confusion_matrix.png')
-        st.image(confusion_matrix, caption='Matrix de Confusão')
+        confusion_matrix = Image.open("assets/confusion_matrix.png")
+        st.image(confusion_matrix, caption="Matrix de Confusão")
 
     with col2:
         st.markdown("### Curva ROC")
         # Carregar e exibir a imagem da curva ROC
-        roc_curve = Image.open('assets/roc_curve.png')
-        st.image(roc_curve, caption='Curva ROC - AUC: 0.79')
+        roc_curve = Image.open("assets/roc_curve.png")
+        st.image(roc_curve, caption="Curva ROC - AUC: 0.79")
 
         # Feature Importance
-    st.markdown("""
+    st.markdown(
+        """
     ### 🎯 Features Mais Importantes
     
     As 6 features que mais impactaram nas decisões do modelo:
@@ -88,34 +105,53 @@ def show_best_model():
     6. **Feature 49**: Sexta feature em importância
     
     > Estas features foram identificadas através da análise SHAP (SHapley Additive exPlanations), que mede a contribuição de cada variável para as previsões do modelo.
-    """)
+    """
+    )
 
     # Visualização das Features
-    feature_importance = pd.DataFrame({
-        'Feature': ['0', '22', '19', '8', '34', '49'],
-        'Importância': [100, 85, 78, 72, 65, 58]  # Valores normalizados para visualização
-    })
+    feature_importance = pd.DataFrame(
+        {
+            "Feature": ["0", "22", "19", "8", "34", "49"],
+            "Importância": [
+                100,
+                85,
+                78,
+                72,
+                65,
+                58,
+            ],  # Valores normalizados para visualização
+        }
+    )
 
     # Criar gráfico de barras horizontal
     fig, ax = plt.subplots(figsize=(10, 4))
-    bars = ax.barh(feature_importance['Feature'], feature_importance['Importância'], 
-                  color='skyblue')
-    
+    bars = ax.barh(
+        feature_importance["Feature"],
+        feature_importance["Importância"],
+        color="skyblue",
+    )
+
     # Personalizar o gráfico
-    ax.set_xlabel('Importância Relativa (%)')
-    ax.set_title('Top 6 Features Mais Importantes')
-    
+    ax.set_xlabel("Importância Relativa (%)")
+    ax.set_title("Top 6 Features Mais Importantes")
+
     # Adicionar valores nas barras
     for bar in bars:
         width = bar.get_width()
-        ax.text(width, bar.get_y() + bar.get_height()/2, 
-                f'{int(width)}%', 
-                ha='left', va='center', fontweight='bold')
-    
+        ax.text(
+            width,
+            bar.get_y() + bar.get_height() / 2,
+            f"{int(width)}%",
+            ha="left",
+            va="center",
+            fontweight="bold",
+        )
+
     st.pyplot(fig)
 
     # Resultados gerais
-    st.markdown("""
+    st.markdown(
+        """
     ### 📈 Resultados Gerais
     
     **Total de amostras**: 10,746
@@ -149,17 +185,22 @@ def show_best_model():
     3. **Próximos Passos**:
        - Avaliar custo-benefício entre precisão e recall
        - Considerar ensemble com outros modelos
-    """)
+    """
+    )
 
     # Footer
-    st.markdown("""
+    st.markdown(
+        """
     <div style='text-align: center; color: #666; padding: 20px;'>
         <small>
             Análise realizada pela equipe AlphaEdTech<br>
             Última atualização: Outubro 2024
         </small>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
+
 
 if __name__ == "__main__":
     show_best_model()
