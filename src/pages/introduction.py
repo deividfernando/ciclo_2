@@ -12,8 +12,8 @@ def show_introduction():
     # Contexto do Projeto
     st.markdown("### 📋 Contexto do Projeto")
     st.markdown("""
-    Este projeto foi desenvolvido como parte do desafio final do Ciclo 2 do curso de Python na AlphaEdtech. 
-    O objetivo principal foi aplicar técnicas avançadas de machine learning em um conjunto de dados anônimo, 
+    Este projeto foi desenvolvido como parte do Desafio Final do Ciclo 2 do curso de Python na AlphaEdtech. 
+    O objetivo principal foi aplicar técnicas avançadas de Machine Learning em um conjunto de dados anônimo, 
     focando especialmente em modelos ensemble como Random Forest e Gradient Boosting.
     """)
     
@@ -144,7 +144,7 @@ def show_introduction():
     st.markdown("### 💾 Dataset")
     st.info("""
     O conjunto de dados utilizado é anônimo e apresenta diversos desafios comuns em problemas reais 
-    de machine learning, incluindo:
+    de Machine Learning, incluindo:
     - Múltiplas features numéricas
     - Presença de valores ausentes
     - Classes desbalanceadas
@@ -159,10 +159,13 @@ def show_introduction():
     with col1:
         st.markdown("#### Seções Principais")
         st.markdown("""
+        - **Introdução**: Contexto do projeto
         - **Dashboard**: Visão geral dos resultados
         - **Análise dos Dados**: Exploração detalhada do dataset
+        - **Melhor Modelo**: Resultado obtido
         - **Modelos**: Configurações e comparações
         - **Resultados**: Métricas e avaliações
+        - **Nosso Time**: Participantes do projeto
         """)
     
     with col2:

@@ -133,7 +133,6 @@ def show_results(results: pd.DataFrame):
                 MetricCard(
                     title="Acurácia",
                     value=model_data['Acurácia'],
-                    suffix="%",
                     color="#1f77b4"
                 ).render()
             
