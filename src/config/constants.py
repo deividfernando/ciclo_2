@@ -92,8 +92,8 @@ DEFAULT_METRICS = [
 
 # Configurações de arquivo
 FILE_PATHS = {
-    "train_data": "data/train.parquet",
-    "test_data": "data/test.parquet",
+    "train_data": "data/train.parquet.encrypted",
+    "test_data": "data/test.parquet.encrypted",
     "results": "resultados_modelos.parquet"
 }
 
