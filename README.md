@@ -68,9 +68,14 @@ Este projeto faz parte do desafio final do ciclo 2 do curso de Python na AlphaEd
 
 ## 📦 Estrutura do Projeto
 ```
+📂 .devcontainer/
+│   └── 📄 devcontainer.json
 📂 data/
-│   ├── 📄 train.parquet
-│   └── 📄 test.parquet
+│   ├── 📄 train.parquet.encrypted
+│   └── 📄 test.parquet.encrypted
+📂 assets/
+│   ├── 📄 confusion_matrix.png
+│   └── 📄 roc_curve.png
 📂 src/
 │   ├── 📂 components/
 │   │   ├── 📄 charts.py
@@ -84,6 +89,8 @@ Este projeto faz parte do desafio final do ciclo 2 do curso de Python na AlphaEd
 │   │   ├── 📄 data_analysis.py
 │   │   ├── 📄 models.py
 │   │   ├── 📄 result.py
+│   │   ├── 📄 introduction.py
+│   │   ├── 📄 best_model.py
 │   │   └── 📄 team.py
 │   ├── 📂 utils/
 │       ├── 📄 data_loader.py
@@ -91,13 +98,13 @@ Este projeto faz parte do desafio final do ciclo 2 do curso de Python na AlphaEd
 📂 utils/
 │   └── 📄 functions.py
 📄 analise_modelos.ipynb
-📄 analise_resultados.ipynb 
+📄 analise_resultados.ipynb
 📄 app.py
-📄 LICENSE 
-📄 predicoes_finais.csv 
-📄 README.md
+📄 info_modelo.json
+📄 modelo_final.joblib
+📄 predicoes_finais.csv
 📄 requirements.txt
-📄 resultado_modelos.parquet
+📄 resultados_modelos.parquet
 📄 treinamento.ipynb
 
 ```
