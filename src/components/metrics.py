@@ -132,7 +132,6 @@ def create_model_metrics_summary(results: pd.DataFrame) -> MetricGrid:
         title="Melhor Acurácia",
         value=best_acc,
         description=f"Modelo: {best_acc_model}",
-        suffix="%",
         color="#1f77b4"
     ))
     
