@@ -37,7 +37,7 @@ def create_sidebar():
         return option_menu(
             menu_title="Menu",
             options=["Introdução", "Dashboard", "Análise dos Dados", "Melhor Modelo", "Modelos", "Resultados", "Nosso Time"],
-            icons=["house", "speedometer2", "bar-chart", "Trophy", "gear", "graph-up", "people"],
+            icons=["house", "speedometer2", "bar-chart", "trophy", "gear", "graph-up", "people"],
             menu_icon="cast",
             default_index=0,
             styles={
