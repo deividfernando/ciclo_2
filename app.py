@@ -6,6 +6,7 @@ import plotly.io as pio
 from src.pages.introduction import show_introduction
 from src.pages.dashboard import show_dashboard
 from src.pages.data_analysis import show_analysis
+from src.pages.best_model import show_best_model
 from src.pages.models import show_models
 from src.pages.results import show_results
 from src.pages.team import show_team
@@ -35,8 +36,8 @@ def create_sidebar():
     with st.sidebar:
         return option_menu(
             menu_title="Menu",
-            options=["Introdução", "Dashboard", "Análise dos Dados", "Modelos", "Resultados", "Nosso Time"],
-            icons=["house", "speedometer2", "bar-chart", "gear", "graph-up", "people"],
+            options=["Introdução", "Dashboard", "Análise dos Dados", "Melhor Modelo", "Modelos", "Resultados", "Nosso Time"],
+            icons=["house", "speedometer2", "bar-chart", "Trophy", "gear", "graph-up", "people"],
             menu_icon="cast",
             default_index=0,
             styles={
@@ -67,6 +68,8 @@ def main():
             show_introduction()
         elif selected_page == "Dashboard":
             show_dashboard(df, results)
+        elif selected_page == "Melhor Modelo":
+            show_best_model()
         elif selected_page == "Análise dos Dados":
             show_analysis(df)
         elif selected_page == "Modelos":

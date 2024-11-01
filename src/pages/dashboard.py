@@ -167,10 +167,28 @@ def show_dashboard(df: pd.DataFrame, results: pd.DataFrame):
 if __name__ == "__main__":
     # Para teste local
     import pandas as pd
+    from cryptography.fernet import Fernet
+    import os
+    import io
     
     try:
-        df = pd.read_parquet('../data/train.parquet')
-        results = pd.read_parquet('../resultados_modelos.parquet')
-        show_dashboard(df, results)
+        key = os.getenv('CRYPTO_KEY')
+        if not key:
+            with open('.env', 'rb') as key_file:
+                key = key_file.read()
+        
+        f = Fernet(key)
+        
+        with open('data/train.parquet.encrypted', 'rb') as file:
+            encrypted_data = file.read()
+            decrypted_data = f.decrypt(encrypted_data)
+            df = pd.read_parquet(io.BytesIO(decrypted_data))
+        
+        with open('data/test.parquet.encrypted', 'rb') as file:
+            encrypted_data = file.read()
+            decrypted_data = f.decrypt(encrypted_data)
+            test = pd.read_parquet(io.BytesIO(decrypted_data))
+            
     except Exception as e:
-        st.error(f"Erro ao carregar dados: {str(e)}")
+        print("Erro ao carregar os dados:", e)
+        exit()

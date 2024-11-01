@@ -1,5 +1,9 @@
 data/test.csv
 data/train.csv
 venv/
-data/test.parquet
-data/train.parquet
+*.parquet
+.env
+!*.parquet.encrypted
+encrypt_data.py
+__pycache__/
+.streamlit/secrets.toml

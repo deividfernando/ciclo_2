@@ -4,6 +4,8 @@ import requests
 from src.config.constants import LOTTIE_URLS, FILE_PATHS, ERROR_MESSAGES
 from datetime import datetime
 import os
+from cryptography.fernet import Fernet
+import io
 
 @st.cache_data
 def load_lottie_url(url: str) -> dict:
@@ -25,20 +27,31 @@ def load_lottie_url(url: str) -> dict:
         return None
 
 @st.cache_data
-def load_data() -> pd.DataFrame:
+def load_data():
     """
-    Carrega e valida os dados de treino.
+    Carrega os dados de treino criptografados.
     
     Returns:
-        pd.DataFrame: DataFrame com os dados ou None se houver erro
+        DataFrame: Dados carregados ou None em caso de erro
     """
     try:
         # Verificar se o arquivo existe
         if not os.path.exists(FILE_PATHS['train_data']):
             raise FileNotFoundError(f"Arquivo não encontrado: {FILE_PATHS['train_data']}")
         
-        # Carregar dados
-        df = pd.read_parquet(FILE_PATHS['train_data'])
+        # Carregar chave de criptografia
+        key = os.getenv('CRYPTO_KEY')
+        if not key:
+            with open(FILE_PATHS['crypto_key'], 'rb') as key_file:
+                key = key_file.read()
+        
+        f = Fernet(key)
+        
+        # Carregar e descriptografar dados
+        with open(FILE_PATHS['train_data'], 'rb') as file:
+            encrypted_data = file.read()
+            decrypted_data = f.decrypt(encrypted_data)
+            df = pd.read_parquet(io.BytesIO(decrypted_data))
         
         # Validar estrutura básica dos dados
         if df.empty:
@@ -57,29 +70,39 @@ def load_data() -> pd.DataFrame:
         return None
 
 @st.cache_data
-def load_test_data() -> pd.DataFrame:
+def load_test_data():
     """
-    Carrega e valida os dados de teste.
+    Carrega os dados de teste criptografados.
     
     Returns:
-        pd.DataFrame: DataFrame com os dados de teste ou None se houver erro
+        DataFrame: Dados de teste carregados ou None em caso de erro
     """
     try:
         # Verificar se o arquivo existe
         if not os.path.exists(FILE_PATHS['test_data']):
             raise FileNotFoundError(f"Arquivo não encontrado: {FILE_PATHS['test_data']}")
         
-        # Carregar dados
-        df = pd.read_parquet(FILE_PATHS['test_data'])
+        # Carregar chave de criptografia
+        key = os.getenv('CRYPTO_KEY')
+        if not key:
+            with open(FILE_PATHS['crypto_key'], 'rb') as key_file:
+                key = key_file.read()
         
-        # Validar estrutura básica dos dados
-        if df.empty:
-            raise ValueError("DataFrame de teste está vazio")
+        f = Fernet(key)
         
-        return df
+        # Carregar e descriptografar dados
+        with open(FILE_PATHS['test_data'], 'rb') as file:
+            encrypted_data = file.read()
+            decrypted_data = f.decrypt(encrypted_data)
+            test = pd.read_parquet(io.BytesIO(decrypted_data))
+        
+        # Log de carregamento bem-sucedido
+        print(f"Dados de teste carregados com sucesso: {len(test)} registros, {len(test.columns)} colunas")
+        
+        return test
         
     except Exception as e:
-        st.error(f"Erro ao carregar dados de teste: {str(e)}")
+        st.error(f"{ERROR_MESSAGES['data_load']} Erro: {str(e)}")
         return None
 
 @st.cache_data
