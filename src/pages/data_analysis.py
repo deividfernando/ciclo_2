@@ -173,7 +173,7 @@ def show_analysis(df: pd.DataFrame):
     metrics_grid.render()
     
     # Análise de tipos de dados
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     
     with col1:
         st.markdown("#### Tipos de Dados")
@@ -204,6 +204,41 @@ def show_analysis(df: pd.DataFrame):
             title='Percentual de Valores Nulos'
         )
         st.plotly_chart(fig_nulls, use_container_width=True)
+
+    with col3:
+        st.markdown("#### Distribuição de Classes")
+        if 'y' in df.columns:
+            class_dist = df['y'].value_counts()
+            total = len(df)
+            
+            # Criar gráfico de pizza
+            fig_classes = go.Figure(data=[go.Pie(
+                labels=class_dist.index.astype(str),
+                values=class_dist.values,
+                hole=0.3,
+                marker_colors=COLOR_PALETTES['main'],
+                textinfo='percent+value',
+                hovertemplate="<b>%{label}</b><br>" +
+                            "Quantidade: %{value:,.0f}<br>" +
+                            "Percentual: %{percent:.1%}<extra></extra>"
+            )])
+            
+            fig_classes.update_layout(
+                title='Distribuição das Classes',
+                template=PLOTLY_TEMPLATE,
+                showlegend=True,
+                legend=dict(
+                    orientation="h",
+                    yanchor="bottom",
+                    y=-0.2,
+                    xanchor="center",
+                    x=0.5
+                )
+            )
+            
+            st.plotly_chart(fig_classes, use_container_width=True)
+        else:
+            st.info("Coluna 'y' não encontrada para análise de classes")
 
     # Análise detalhada baseada na seleção
     st.markdown(f"### 📈 {viz_type}")
